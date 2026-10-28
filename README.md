@@ -1,4 +1,4 @@
-# Vue3 Quasar JWT authorization project
+# Vue3 Quasar JWT authorization with roles project
 
 A Quasar Project
 Backend api PHP8 
