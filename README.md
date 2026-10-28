@@ -1,7 +1,7 @@
-# Quasar App (quasar-test)
+# Vue3 Quasar JWT authorization project
 
 A Quasar Project
-
+Backend api PHP8 
 ## Install the dependencies
 ```bash
 yarn
