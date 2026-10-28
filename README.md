@@ -20,6 +20,7 @@ npm run dev
 ```bash
 quasar build
 ```
-
+or
+npm run build
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
