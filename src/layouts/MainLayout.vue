@@ -8,7 +8,7 @@
     :helpMessage = "helpMessage"
   />
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="header">
       <q-toolbar>
         <q-btn
           v-if="isAuthenticated"
@@ -35,7 +35,9 @@
         </template>
 
         <template v-else>
-          <q-btn to="/SignUpPage/" stretch flat label="LogIn" />
+          <q-btn
+            v-if="router.currentRoute.value.name !== 'SignUpPage'"
+            to="/SignUpPage/" stretch flat label="login" />
         </template>
 
       </q-toolbar>
@@ -67,7 +69,6 @@
     </q-drawer>
     <q-page-container>
       <router-view />
-      <!-- <pre>{{isAuthenticated}}</pre> -->
     </q-page-container>
   </q-layout>
 </template>
@@ -149,11 +150,15 @@ const linksList = [
       }
     })
 
-
     //LogOut button
     const logOut =() => {
       authStore.logout()
       router.push({name:'SignUpPage'})
     }
-
 </script>
+
+<style scoped>
+.header{
+  background: linear-gradient(90deg, rgb(71, 71, 70) 50%, rgb(21, 1, 68));
+}
+</style>

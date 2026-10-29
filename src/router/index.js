@@ -42,7 +42,7 @@ export default route(function (/* { store, ssrContext } */) {
       if (to.path === '/SignUpPage/') {
         next(); 
       } else {
-        next('/SignUpPage/', 2000)
+        next('/SignUpPage/')
       }
     } else {
       next()

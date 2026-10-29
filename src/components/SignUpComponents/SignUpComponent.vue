@@ -131,7 +131,7 @@ input {
 button {
   width: 100%;
   padding: 10px;
-  background-color: #42b983;
+  background: linear-gradient(90deg, rgb(3, 3, 0) 50%, rgb(20, 62, 139));
   color: white;
   border: none;
   border-radius: 5px;
