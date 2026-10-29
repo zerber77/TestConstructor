@@ -86,7 +86,7 @@ import HelpMessageComponent from "components/Modals/HelpMessageComponent.vue";
 const linksList = [
   {
     id:0,
-    title: 'Categories',
+    title: 'Cabinet',
     caption: '',
     icon: 'person',
     link: '/CategoriesPage/',
@@ -103,7 +103,7 @@ const linksList = [
   
   {
     id:2,
-    title: 'About',
+    title: 'About Project',
     caption: '',
     icon: 'star',
     link: '/',
