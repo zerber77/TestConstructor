@@ -17,20 +17,9 @@ import useMessageVars from "components/modules/messages/getMessageVars";
 const {setErrorMessage} = useMessageVars()
 const router = useRouter()
 const authStore = useAuthStore()
-const authorised =  ref({
-    id: null,
-    login: null,
-    name:null,
-    role:null,
-})
 
-const expanded = ref(false)    
+const authorised = computed(()=> authStore.getTokenData())
 
-onMounted(()=>{
-    if (authStore.isAuthenticated){
-        authorised.value = authStore.getTokenData()
-    }
-});
 
 </script>
 

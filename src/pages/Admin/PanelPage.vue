@@ -14,30 +14,13 @@
 </template>
 
 <script setup>
-import {onMounted, ref, onUpdated} from "vue";
-import { useRouter } from "vue-router";
+import {computed, ref} from "vue";
 import { useAuthStore } from 'stores/auth'
-import {isTokenValid} from "components/modules/auth/isTokenValid";
 import useMessageVars from "components/modules/messages/getMessageVars";
 
+const authStore = useAuthStore()  
+const authorised = computed(()=> authStore.getTokenData())
 
-const {setErrorMessage} = useMessageVars()
-const router = useRouter()
-const authStore = useAuthStore()
-const authorised =  ref({
-    id: null,
-    login: null,
-    name:null,
-    role:null,
-})
-
-const expanded = ref(false)    
-
-onMounted(()=>{
-    if (authStore.isAuthenticated){
-        authorised.value = authStore.getTokenData()
-    }
-});
 
 </script>
 

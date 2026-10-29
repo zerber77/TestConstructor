@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import SignUpComponent from "components/SignUpComponents/SignUpComponent.vue";
 import LogInComponent from "components/SignUpComponents/LogInComponent.vue";
 import ErrorMessageComponent from "components/Modals/ErrorMessageComponent.vue";

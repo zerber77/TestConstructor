@@ -11,7 +11,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
-          v-if="authorised"
+          v-if="authStore.isAuthenticated()"
           flat
           dense
           round
@@ -24,14 +24,14 @@
 
 <!--        <q-separator dark vertical />-->
 
-        <template v-if="authorised">
+        <template v-if="authStore.isAuthenticated()">
           <q-item-section avatar>
             <q-icon name="person" />
-            <q-item-label v-if="authorised.login">
+            <q-item-label v-if="authorised?.login">
                 {{authorised.login}}
             </q-item-label>
           </q-item-section>
-          <q-btn to="/SignUpPage/" @click.prevent="logOut" stretch flat label="LogOut" />
+          <q-btn @click.prevent="logOut" stretch flat label="LogOut" />
         </template>
 
         <template v-else>
@@ -42,7 +42,7 @@
     </q-header>
 
     <q-drawer
-      v-if="authorised"
+      v-if="authStore.isAuthenticated()"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -63,19 +63,19 @@
           :icon="link.icon"
           :link="link.link"
           :role="link.role"
-          :current_role="authorised.role"
+          :current_role="authorised?.role"
         />
       </q-list>
     </q-drawer>
     <q-page-container>
       <router-view />
-      <!-- <pre>{{authorised}}</pre> -->
+  //    <pre>{{authStore.isAuthenticated()}}</pre>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup>
-import {onMounted, onUpdated, provide, reactive, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { useRouter } from 'vue-router';
 import {isTokenValid} from "components/modules/auth/isTokenValid";
@@ -119,14 +119,9 @@ const linksList = [
     const {help, error,helpMessage,errorMessage, setHelpMessage, setErrorMessage} = useMessageVars()
     const authStore = useAuthStore()
     const router = useRouter()
-    let authorised =  ref({
-      id: null,
-      login: null,
-      name:null,
-      role:null
-    })
 
-
+    const authorised = computed(()=> authStore.getTokenData())
+    
     onMounted(async ()=>{
       //check token
       if (authStore.isAuthenticated()){
@@ -146,15 +141,12 @@ const linksList = [
         authStore.logout() // clear token
         setTimeout(() =>{router.push({name:'SignUpPage'})},2000) 
       }
-      authorised.value = authStore.getTokenData()
     })
 
-    onUpdated(()=>authorised.value = authStore.getTokenData())
 
     //LogOut button
     const logOut =() => {
       authStore.logout()
-      authorised.value = authStore.getTokenData()
       router.push({name:'SignUpPage'})
     }
 
