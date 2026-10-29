@@ -7,15 +7,9 @@
 </template>
 
 <script setup>
-import {onMounted, ref, onUpdated} from "vue";
-import { useRouter } from "vue-router";
+import {computed} from "vue";
 import { useAuthStore } from 'stores/auth'
-import {isTokenValid} from "components/modules/auth/isTokenValid";
-import useMessageVars from "components/modules/messages/getMessageVars";
 
-
-const {setErrorMessage} = useMessageVars()
-const router = useRouter()
 const authStore = useAuthStore()
 
 const authorised = computed(()=> authStore.getTokenData())

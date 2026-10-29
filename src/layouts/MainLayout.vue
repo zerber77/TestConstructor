@@ -11,7 +11,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-btn
-          v-if="authStore.isAuthenticated()"
+          v-if="isAuthenticated"
           flat
           dense
           round
@@ -24,11 +24,11 @@
 
 <!--        <q-separator dark vertical />-->
 
-        <template v-if="authStore.isAuthenticated()">
+        <template v-if="isAuthenticated">
           <q-item-section avatar>
             <q-icon name="person" />
-            <q-item-label v-if="authorised?.login">
-                {{authorised.login}}
+            <q-item-label v-if="userData?.login">
+                {{userData.login}}
             </q-item-label>
           </q-item-section>
           <q-btn @click.prevent="logOut" stretch flat label="LogOut" />
@@ -42,7 +42,7 @@
     </q-header>
 
     <q-drawer
-      v-if="authStore.isAuthenticated()"
+      v-if="isAuthenticated"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -57,19 +57,17 @@
         </q-item-label>
 
         <EssentialLink
-          v-for="link in linksList"
+          v-for="link in visibleLinks"
           :key="link.id"
           :title="link.title"
           :icon="link.icon"
           :link="link.link"
-          :role="link.role"
-          :current_role="authorised?.role"
         />
       </q-list>
     </q-drawer>
     <q-page-container>
       <router-view />
-  //    <pre>{{authStore.isAuthenticated()}}</pre>
+      <!-- <pre>{{isAuthenticated}}</pre> -->
     </q-page-container>
   </q-layout>
 </template>
@@ -91,7 +89,7 @@ const linksList = [
     caption: '',
     icon: 'person',
     link: '/CategoriesPage/',
-    role: ['user']
+    roles: ['user']
   },
   {
     id:1,
@@ -99,7 +97,7 @@ const linksList = [
     caption: '',
     icon: 'today',
     link: '/PanelPage/',
-    role: ['admin']
+    roles: ['admin']
   },
   
   {
@@ -108,7 +106,7 @@ const linksList = [
     caption: '',
     icon: 'star',
     link: '/',
-    role: ['user','admin']
+    roles: ['user','admin']
   },
 
 ]
@@ -120,7 +118,15 @@ const linksList = [
     const authStore = useAuthStore()
     const router = useRouter()
 
-    const authorised = computed(()=> authStore.getTokenData())
+    const isAuthenticated = computed(() => authStore.isAuthenticated())
+    const userData = computed(()=> authStore.getTokenData())
+
+    const visibleLinks = computed(() => {
+      if (!isAuthenticated.value || !userData.value?.role) return []
+      return linksList.filter(link => 
+        link.roles.includes(userData.value.role)
+      )
+    })
     
     onMounted(async ()=>{
       //check token

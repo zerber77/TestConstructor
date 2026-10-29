@@ -1,6 +1,5 @@
 <template>
   <q-item
-    v-if="role.includes(current_role)"
     :to="link"
     exact
     clickable
@@ -33,9 +32,6 @@ class="my-menu-link"
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router';
-import routes from "src/router/routes";
 
 const  props = defineProps( {
     title: {
@@ -49,21 +45,7 @@ const  props = defineProps( {
     icon: {
       type: String,
     },
-    role: {
-      type: Array,
-      default: ['user']
-    },
-    current_role: {
-      type: String,
-    }
   })
-  
-
-//  const router = useRouter()
-
-// getNews(url){
-//       router.push({path:url })//query: {ag:url}
-//     }
   
 </script>
 
